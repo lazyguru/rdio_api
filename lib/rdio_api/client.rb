@@ -22,11 +22,7 @@ module RdioApi
     # Set up the connection to use for all requests based on the options from intialization. 
 
     def unauthenticated_connection
-      params = {}
-      params[:consumer_key] = @consumer_key 
-      params[:consumer_secret] = @consumer_secret 
-
-      initialize_connection(params)
+      authenticated_connection
     end
     
     # Sets the access token to make authenticated calls
@@ -35,8 +31,12 @@ module RdioApi
       params = {}
       params[:consumer_key] = @consumer_key 
       params[:consumer_secret] = @consumer_secret 
-      params[:token] = @access_token 
-      params[:token_secret] = @access_secret 
+      if @access_token
+        params[:token] = @access_token
+      end
+      if @access_secret
+        params[:token_secret] = @access_secret
+      end
 
       initialize_connection(params)
     end
